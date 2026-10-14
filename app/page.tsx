@@ -44,6 +44,7 @@ export default function Home() {
         </Link>
         <nav className={styles.nav} aria-label="주요 메뉴">
           <a href="#projects">프로젝트</a>
+          <Link href="/business">영리형 사업</Link>
           <a href="#flow">참여 흐름</a>
           <a href="#about">버디아코니아</a>
           <Link className={styles.opsLink} href="/ops">운영실</Link>
@@ -61,6 +62,7 @@ export default function Home() {
           <div className={styles.heroActions}>
             <a className={styles.primaryButton} href="#projects">프로젝트 보기</a>
             <a className={styles.secondaryButton} href="#flow">어떻게 이어지는지 보기</a>
+            <Link className={styles.secondaryButton} href="/business">영리형 비즈니스 보기 ↗</Link>
           </div>
         </div>
         <aside className={styles.heroAside}>
