@@ -44,6 +44,7 @@ export default function Home() {
         </Link>
         <nav className={styles.nav} aria-label="주요 메뉴">
           <Link href="/discover">경험 찾기</Link>
+          <Link href="/business">영리사업</Link>
           <a href="#projects">프로젝트</a>
           <a href="#flow">참여 흐름</a>
           <a href="#about">버디아코니아</a>
