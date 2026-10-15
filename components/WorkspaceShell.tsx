@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { BISAgent, BISSystem } from "../data/bisAgents";
 import { getCurrentUser, getCurrentUserRole } from "../lib/workspace-auth";
 import { getWorkspaceMode, rooms } from "../lib/workspace-config";
@@ -27,7 +28,7 @@ export function WorkspaceShell({
     <main className="workspace-shell">
       <aside className="sidebar" aria-label="Birdiaconia 운영실 탐색">
         <div className="brand">
-          <a className="brand-mark" href="/">B</a>
+          <Link className="brand-mark" href="/">B</Link>
           <div>
             <strong>Birdiaconia</strong>
             <span>운영실 · /ops</span>
