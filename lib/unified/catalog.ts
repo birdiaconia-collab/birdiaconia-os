@@ -69,3 +69,15 @@ export function filterPublicOffers(offers:PublicOffer[],filters:{
  return offers.filter(o=>(!region||o.region===region)&&(!category||o.category===category)&&
   (!query||[o.title,o.summary,o.region,...o.highlights].join(" ").normalize("NFKC").toLocaleLowerCase("ko").includes(query))).slice(0,limit);
 }
+
+/** Drop unapproved, expired and duplicate rows before exposing the public contract. */
+export function publicCatalog(rows:readonly Record<string,unknown>[],now=new Date()):PublicOffer[]{
+ const seen=new Set<string>(),publicOffers:PublicOffer[]=[];
+ for(const row of rows){
+  const offer=toPublicOffer(row,now);
+  if(!offer||seen.has(offer.id))continue;
+  seen.add(offer.id);
+  publicOffers.push(offer);
+ }
+ return publicOffers;
+}
