@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { filterPublicOffers, publicCatalog } from "../../../../../lib/unified/catalog";
-import { publishedOfferRows } from "../../../../../data/unified/published-offers";
+import { filterPublicOffers, publicCatalog } from "../../../../lib/unified/catalog";
+import { publishedOfferRows } from "../../../../data/unified/published-offers";
 
 export const dynamic = "force-dynamic";
 
