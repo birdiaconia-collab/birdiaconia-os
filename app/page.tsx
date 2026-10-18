@@ -43,6 +43,8 @@ export default function Home() {
           </span>
         </Link>
         <nav className={styles.nav} aria-label="주요 메뉴">
+          <Link href="/discover">경험 찾기</Link>
+          <Link href="/business">영리사업</Link>
           <a href="#projects">프로젝트</a>
           <a href="#flow">참여 흐름</a>
           <a href="#about">버디아코니아</a>
@@ -59,8 +61,9 @@ export default function Home() {
             사람과 프로젝트의 실제 참여를 하나의 흐름으로 연결합니다.
           </p>
           <div className={styles.heroActions}>
-            <a className={styles.primaryButton} href="#projects">프로젝트 보기</a>
-            <a className={styles.secondaryButton} href="#flow">어떻게 이어지는지 보기</a>
+            <Link className={styles.primaryButton} href="/discover">지역 경험 발견하기</Link>
+            <a className={styles.secondaryButton} href="#projects">프로젝트 보기</a>
+
           </div>
         </div>
         <aside className={styles.heroAside}>
