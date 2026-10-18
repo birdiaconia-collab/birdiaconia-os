@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {toPublicOffer,filterPublicOffers} from "../lib/unified/catalog.ts";
+import {toPublicOffer,filterPublicOffers,publicCatalog} from "../lib/unified/catalog.ts";
 import {canMoveBooking,canGrantBenefit,calculateSettlement} from "../lib/unified/commerce.ts";
 const fixture={
  id:"approved-1",experience_id:"exp-1",partner_id:"partner-1",partner_name:"확인된 파트너",
@@ -43,4 +43,12 @@ test("GMV is not company commission",()=>{
  assert.equal(v.netCompanyContributionWon,430000);
  assert.throws(()=>calculateSettlement({grossMerchandiseValueWon:100,partnerPayableWon:100,
  companyGrossRevenueWon:100,paymentFeesWon:0,refundsWon:0,directCostsWon:0}));
+});
+
+test("shared catalog hides drafts, expired offers and duplicate IDs",()=>{
+ const items=publicCatalog([fixture,{...fixture,title:"duplicate same ID"},{...fixture,id:"draft-2",status:"DRAFT"},{...fixture,id:"expired-3",visible_until:"2026-10-01T00:00:00.000Z"}],now);
+ assert.equal(items.length,1);
+ assert.equal(items[0].title,"승인된 지역 경험");
+ assert.equal("private_phone" in items[0],false);
+ assert.deepEqual(publicCatalog([],now),[]);
 });
