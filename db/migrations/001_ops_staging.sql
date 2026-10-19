@@ -62,6 +62,7 @@ language plpgsql security definer set search_path = pg_catalog, public
 as $$
 declare
   v_inserted integer;
+  v_new_application integer;
   v_application_id uuid;
   v_status text;
   v_existing record;
@@ -99,16 +100,20 @@ begin
     values(p_project_id,p_person_ref)
     on conflict(project_id,person_ref) do nothing
     returning id,status into v_application_id,v_status;
-  if v_application_id is null then
+  get diagnostics v_new_application = row_count;
+  if v_new_application = 0 then
     select id,status into v_application_id,v_status
       from public.birdia_ops_applications where project_id = p_project_id and person_ref = p_person_ref;
   end if;
 
   insert into public.birdia_ops_audit(event_id,application_id,actor,action)
-    values(p_event_id,v_application_id,p_source,'APPLICATION_RECEIVED');
-  insert into public.birdia_ops_outbox(dedupe_key,application_id,event_type)
-    values(p_event_id,v_application_id,'APPLICATION_REVIEW_REQUIRED');
-  return jsonb_build_object('duplicate',false,'application_id',v_application_id,'status',v_status);
+    values(p_event_id,v_application_id,p_source,
+           case when v_new_application = 0 then 'APPLICATION_ALREADY_EXISTS' else 'APPLICATION_RECEIVED' end);
+  if v_new_application = 1 then
+    insert into public.birdia_ops_outbox(dedupe_key,application_id,event_type)
+      values(p_event_id,v_application_id,'APPLICATION_REVIEW_REQUIRED');
+  end if;
+  return jsonb_build_object('duplicate',v_new_application = 0,'application_id',v_application_id,'status',v_status);
 end;
 $$;
 
