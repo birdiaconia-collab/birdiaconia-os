@@ -1,68 +1,50 @@
 import { NextResponse } from "next/server";
-import type {
-  BirdiaconiaEvent,
-  BirdiaconiaEventType,
-  EventSource,
-} from "../../../core/types";
-import { processEvent } from "../../../runtime/process-event";
+import { stagingWriteEnabled, storeConfigured } from "../../../lib/ops/access";
+import { ingestApplication } from "../../../lib/ops/db";
+import { IntakeError, parseSubmittedApplication, verifySignedPayload } from "../../../lib/ops/verification";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const supportedEvents = new Set<BirdiaconiaEventType>([
-  "PROJECT_APPLICATION_SUBMITTED",
-]);
-
-const supportedSources = new Set<EventSource>([
-  "site",
-  "toss",
-  "google",
-  "operator",
-  "system",
-]);
+function fail(error: string, status: number) {
+  return NextResponse.json({ error }, { status, headers: { "Cache-Control": "no-store" } });
+}
 
 export async function POST(request: Request) {
+  // No production or unconfigured writes. Site/Toss browser clients must not hold signing secrets.
+  if (!stagingWriteEnabled()) return fail("staging_write_gate_closed", 423);
+  if (!storeConfigured()) return fail("storage_not_configured", 503);
+  const secret = process.env.BIRDIA_EVENT_HMAC_SECRET ?? "";
+  if (secret.length < 32) return fail("event_signing_not_configured", 503);
+  if (!(request.headers.get("content-type") ?? "").toLowerCase().startsWith("application/json")) {
+    return fail("unsupported_content_type", 415);
+  }
+  const size = Number(request.headers.get("content-length") ?? "0");
+  if (Number.isFinite(size) && size > 8192) return fail("request_too_large", 413);
+  let raw: string;
   try {
-    const body = (await request.json()) as Record<string, unknown>;
-    const type = body.type;
-    const source = body.source ?? "site";
-    const payload = body.payload;
-
-    if (typeof type !== "string" || !supportedEvents.has(type as BirdiaconiaEventType)) {
-      return NextResponse.json(
-        { error: "unsupported_event", supported: [...supportedEvents] },
-        { status: 400 },
-      );
-    }
-
-    if (typeof source !== "string" || !supportedSources.has(source as EventSource)) {
-      return NextResponse.json(
-        { error: "unsupported_source", supported: [...supportedSources] },
-        { status: 400 },
-      );
-    }
-
-    if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
-      return NextResponse.json({ error: "payload_must_be_object" }, { status: 400 });
-    }
-
-    const event: BirdiaconiaEvent = {
-      id:
-        typeof body.id === "string" && body.id.trim()
-          ? body.id.trim()
-          : `evt_${crypto.randomUUID()}`,
-      type: type as BirdiaconiaEventType,
-      occurredAt:
-        typeof body.occurredAt === "string" && body.occurredAt.trim()
-          ? body.occurredAt
-          : new Date().toISOString(),
-      source: source as EventSource,
-      payload: payload as Record<string, unknown>,
-    };
-
-    return NextResponse.json(processEvent(event));
+    raw = await request.text();
+  } catch {
+    return fail("invalid_request", 400);
+  }
+  if (Buffer.byteLength(raw, "utf8") > 8192) return fail("request_too_large", 413);
+  const valid = verifySignedPayload(
+    raw,
+    request.headers.get("x-birdiaconia-timestamp"),
+    request.headers.get("x-birdiaconia-signature"),
+    secret
+  );
+  if (!valid) return fail("unauthorized", 401);
+  try {
+    const event = parseSubmittedApplication(JSON.parse(raw));
+    const result = await ingestApplication(event);
+    return NextResponse.json(
+      { persisted: true, eventId: event.id, applicationId: result.application_id,
+        status: result.status, duplicate: result.duplicate },
+      { status: result.duplicate ? 200 : 201, headers: { "Cache-Control": "no-store" } }
+    );
   } catch (error) {
-    const message = error instanceof Error ? error.message : "unknown_error";
-    return NextResponse.json({ error: "event_processing_failed", message }, { status: 400 });
+    if (error instanceof IntakeError || error instanceof SyntaxError) return fail("invalid_event", 422);
+    return fail("staging_storage_failed", 503);
   }
 }
