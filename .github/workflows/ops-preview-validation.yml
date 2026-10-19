@@ -1,0 +1,42 @@
+name: Operations preview validation
+
+on:
+  pull_request:
+    paths:
+      - "app/ops/**"
+      - "app/api/events/**"
+      - "app/api/ops/**"
+      - "app/api/auth/**"
+      - "app/api/runtime/**"
+      - "lib/ops/**"
+      - "components/OpsDashboard*"
+      - "components/OpsLoginButton*"
+      - "db/migrations/**"
+      - "tests/ops-staging.test.mjs"
+      - "package.json"
+      - ".github/workflows/ops-preview-validation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Verify preview gates and signed events
+        run: npm run test:ops
+      - name: Typecheck
+        run: npx tsc --noEmit
+      - name: Lint
+        run: npm run lint
+      - name: Build
+        run: npm run build

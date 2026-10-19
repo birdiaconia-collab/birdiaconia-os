@@ -6,13 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:ops": "node --experimental-strip-types --test tests/ops-staging.test.mjs"
   },
   "dependencies": {
     "@next/eslint-plugin-next": "^15.3.4",
     "next": "^15.3.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "next-auth": "4.24.15"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",
