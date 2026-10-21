@@ -6,13 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "tsc lib/hwpx-workbench.ts --target es2020 --module commonjs --moduleResolution node --lib dom,es2020 --esModuleInterop --strict --skipLibCheck --outDir .testbuild && node --test tests/hwpx-workbench.test.mjs"
   },
   "dependencies": {
     "@next/eslint-plugin-next": "^15.3.4",
     "next": "^15.3.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "jszip": "^3.10.1"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",
@@ -21,6 +23,7 @@
     "eslint": "^9.29.0",
     "eslint-config-next": "^15.3.4",
     "typescript": "^5.5.2",
-    "@eslint/eslintrc": "^3.3.1"
+    "@eslint/eslintrc": "^3.3.1",
+    "@types/jszip": "^3.4.1"
   }
 }
