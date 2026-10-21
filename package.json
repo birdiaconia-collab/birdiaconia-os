@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run lint && npm test && next build",
     "start": "next start",
     "lint": "eslint",
     "test": "tsc lib/hwpx-workbench.ts --target es2020 --module commonjs --moduleResolution node --lib dom,es2020 --esModuleInterop --strict --skipLibCheck --outDir .testbuild && node --test tests/hwpx-workbench.test.mjs"
