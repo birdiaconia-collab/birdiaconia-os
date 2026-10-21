@@ -70,7 +70,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.6fr);
   gap: 40px;
-  align-items: end;
+  align-items: flex-end;
   padding: 86px max(22px, 7vw) 72px;
   background:
     radial-gradient(circle at 90% 5%, rgba(228, 189, 100, 0.22), transparent 22rem),
@@ -167,7 +167,7 @@
 
 .sectionHeading {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
 }
