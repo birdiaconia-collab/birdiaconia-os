@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import {
   fillHwpx,
   openHwpx,
@@ -83,7 +84,7 @@ export default function DocumentsPage() {
   return (
     <main className={styles.root}>
       <header className={styles.header}>
-        <div className={styles.topline}><a href="/ops">← 운영실</a><span>TEST · LOCAL EXECUTION</span></div>
+        <div className={styles.topline}><Link href="/ops">← 운영실</Link><span>TEST · LOCAL EXECUTION</span></div>
         <h1>HWPX 문서 실행실</h1>
         <p>기존 한글 서식을 불러와 변수와 표 셀을 채우고, 새 HWPX 파일로 저장합니다. 결과 파일은 다시 열어 문서 구조를 확인합니다.</p>
       </header>
@@ -174,7 +175,7 @@ export default function DocumentsPage() {
         </>
       )}
       {error && <div className={styles.error} role="alert"><strong>작업을 완료하지 못했습니다.</strong><p>{error}</p></div>}
-      <footer className={styles.footer}><span>Birdiaconia OS · Document Execution v0.1</span><a href="/ops">운영실로 돌아가기 →</a></footer>
+      <footer className={styles.footer}><span>Birdiaconia OS · Document Execution v0.1</span><Link href="/ops">운영실로 돌아가기 →</Link></footer>
     </main>
   );
 }

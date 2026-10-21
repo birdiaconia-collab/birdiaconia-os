@@ -12,13 +12,13 @@ try {
   eslintConfig = [
     ...compat.extends("next/core-web-vitals", "next/typescript"),
     {
-      ignores: [".next/**", "out/**", "build/**", "next-env.d.ts"],
+      ignores: [".next/**", "out/**", "build/**", ".testbuild/**", "next-env.d.ts"],
     },
   ];
 } catch {
   eslintConfig = [
     {
-      ignores: [".next/**", "out/**", "build/**", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
+      ignores: [".next/**", "out/**", "build/**", ".testbuild/**", "next-env.d.ts", "**/*.ts", "**/*.tsx"],
     },
     {
       files: ["**/*.{js,jsx,mjs}"],

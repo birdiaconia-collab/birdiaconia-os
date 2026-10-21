@@ -1,0 +1,10 @@
+# Local build and test artifacts
+node_modules/
+.next/
+.testbuild/
+.vercel/
+*.tsbuildinfo
+.env
+.env.local
+.env.*.local
+npm-debug.log*

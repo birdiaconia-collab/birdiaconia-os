@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { BISAgent, BISSystem } from "../data/bisAgents";
 import { getCurrentUser, getCurrentUserRole } from "../lib/workspace-auth";
 import { getWorkspaceMode, rooms } from "../lib/workspace-config";
@@ -27,7 +28,7 @@ export function WorkspaceShell({
     <main className="workspace-shell">
       <aside className="sidebar" aria-label="Birdiaconia 운영실 탐색">
         <div className="brand">
-          <a className="brand-mark" href="/">B</a>
+          <Link className="brand-mark" href="/">B</Link>
           <div>
             <strong>Birdiaconia</strong>
             <span>운영실 · /ops</span>
@@ -36,7 +37,7 @@ export function WorkspaceShell({
         <div className="mode-pill">{mode} · {role}</div>
         <nav className="nav-list">
           <a className="active" href="#runtime">Runtime</a>
-          <a href="/ops/documents">HWPX 문서 실행실 ↗</a>
+          <Link href="/ops/documents">HWPX 문서 실행실 ↗</Link>
           {visibleRooms.map((room) => (
             <a href={`#${room.id}`} key={room.id} title={room.description}>
               {room.label}

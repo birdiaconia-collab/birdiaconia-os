@@ -27,6 +27,8 @@ jobs:
           npm --version
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+      - name: ESLint
+        run: npm run lint
       - name: HWPX unit tests
         run: npm test
       - name: Full Next.js production build
