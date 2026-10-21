@@ -7,23 +7,25 @@
     "build": "npm run lint && npm test && next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "tsc lib/hwpx-workbench.ts --target es2020 --module commonjs --moduleResolution node --lib dom,es2020 --esModuleInterop --strict --skipLibCheck --outDir .testbuild && node --test tests/hwpx-workbench.test.mjs"
+    "test": "tsc lib/hwpx-workbench.ts lib/office-docx.ts lib/office-xlsx.ts --target es2020 --module commonjs --moduleResolution node --lib dom,es2020 --esModuleInterop --strict --skipLibCheck --outDir .testbuild && node --test tests/*.test.mjs"
   },
   "dependencies": {
     "@next/eslint-plugin-next": "^15.3.4",
+    "docx": "^9.13.0",
+    "exceljs": "^4.4.0",
+    "jszip": "^3.10.1",
     "next": "^15.3.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "jszip": "^3.10.1"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@types/jszip": "^3.4.1",
     "@types/node": "^20.14.10",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "eslint": "^9.29.0",
     "eslint-config-next": "^15.3.4",
-    "typescript": "^5.5.2",
-    "@eslint/eslintrc": "^3.3.1",
-    "@types/jszip": "^3.4.1"
+    "typescript": "^5.5.2"
   }
 }
