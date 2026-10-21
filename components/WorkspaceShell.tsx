@@ -36,6 +36,7 @@ export function WorkspaceShell({
         <div className="mode-pill">{mode} · {role}</div>
         <nav className="nav-list">
           <a className="active" href="#runtime">Runtime</a>
+          <a href="/ops/documents">HWPX 문서 실행실 ↗</a>
           {visibleRooms.map((room) => (
             <a href={`#${room.id}`} key={room.id} title={room.description}>
               {room.label}
