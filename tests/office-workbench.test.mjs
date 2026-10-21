@@ -35,4 +35,13 @@ test("XLSX new and existing sheet modifications preserve formula",async()=>{
  const source=new Uint8Array(await wb.xlsx.writeBuffer());
  const ws=await openXlsx(source,"원본.xlsx");
  assert.ok(Object.hasOwn(ws.placeholders,"항목"));
- const result=await fillXlsx(ws,{항목:"교통비"},[{sheet:"예산",address:"A2",value:"금액"}...[truncated]
+ const result=await fillXlsx(ws,{항목:"교통비"},[{sheet:"예산",address:"A2",value:"금액"}]);
+ const out=new ExcelJS.Workbook();await out.xlsx.load(new Uint8Array(result.output).buffer);
+ assert.equal(out.getWorksheet("예산").getCell("A1").value,"교통비");
+ assert.equal(out.getWorksheet("예산").getCell("A2").value,"금액");
+ assert.equal(out.getWorksheet("예산").getCell("B2").value.formula,"B1*2");
+ await assert.rejects(fillXlsx(ws,{},[{sheet:"예산",address:"B2",value:"99"}]));
+ const fresh=await createXlsx("활동","유형\t내용\n여행\t기록");
+ assert.equal((await openXlsx(fresh.output,"새표.xlsx")).sheets[0],"활동");
+});
+
