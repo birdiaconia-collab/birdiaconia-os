@@ -3,6 +3,7 @@ import type { BISAgent, BISSystem } from "../data/bisAgents";
 import { getCurrentUser, getCurrentUserRole } from "../lib/workspace-auth";
 import { getWorkspaceMode, rooms } from "../lib/workspace-config";
 import { canViewRoom } from "../lib/workspace-permissions";
+import { AgentCommandCenter } from "./AgentCommandCenter";
 import { InputRoom } from "./InputRoom";
 import { RoomCard } from "./RoomCard";
 import { RuntimeProbe } from "./RuntimeProbe";
@@ -36,7 +37,8 @@ export function WorkspaceShell({
         </div>
         <div className="mode-pill">{mode} · {role}</div>
         <nav className="nav-list">
-          <a className="active" href="#runtime">Runtime</a>
+          <a className="active" href="#agent-command">Agent</a>
+          <a href="#runtime">Runtime</a>
           {visibleRooms.map((room) => (
             <a href={`#${room.id}`} key={room.id} title={room.description}>
               {room.label}
@@ -72,6 +74,7 @@ export function WorkspaceShell({
           <span>AUDIT LOG</span>
         </section>
 
+        <AgentCommandCenter />
         <RuntimeProbe />
 
         {canViewRoom(role, "today", mode) && <TodayRoom mode={mode} role={role} />}
