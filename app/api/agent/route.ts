@@ -1,3 +1,4 @@
+import { hasAgentSession, sameOrigin } from "../../../lib/agent-session";
 import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
@@ -25,11 +26,10 @@ function isPlan(value: unknown): value is Plan {
 }
 
 export async function POST(request: Request) {
-  const expectedToken = process.env.AGENT_OPERATOR_TOKEN;
-  if (!expectedToken) {
-    return NextResponse.json({ error: "operator_auth_not_configured", message: "운영자 인증이 설정되지 않아 Agent 실행을 차단했습니다." }, { status: 503 });
+  if (!sameOrigin(request)) {
+    return NextResponse.json({ error: "invalid_origin" }, { status: 403 });
   }
-  if (request.headers.get("authorization") !== `Bearer ${expectedToken}`) {
+  if (!hasAgentSession(request)) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
   let command: unknown;
