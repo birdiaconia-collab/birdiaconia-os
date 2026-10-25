@@ -1,0 +1,19 @@
+{
+  "name": "birdiaconia-toss",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build:web": "vite build",
+    "build": "vite build && ait build",
+    "deploy": "ait deploy"
+  },
+  "dependencies": {
+    "@apps-in-toss/web-framework": "3.0.4"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0",
+    "typescript": "~5.7.2"
+  }
+}

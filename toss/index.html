@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#F7F5EF" />
+  <meta name="description" content="버디아코니아의 일상 콘텐츠, 지역의 한 끼와 여행의 기록." />
+  <title>일상살이 · 버디아코니아</title>
+  <style>
+    :root { font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; color:#26332b; background:#f7f5ef; font-synthesis:none; }
+    * { box-sizing:border-box }
+    body { margin:0; min-width:300px; }
+    button { font:inherit; cursor:pointer; }
+    button:focus-visible { outline:3px solid #7f9c6d; outline-offset:3px; }
+    .shell { max-width:600px; margin:auto; min-height:100vh; padding:calc(18px + env(safe-area-inset-top)) 20px calc(32px + env(safe-area-inset-bottom)); }
+    .overline { font-size:11px; font-weight:800; letter-spacing:.13em; color:#658253; margin:0 0 7px; }
+    h1 { font-size:29px; letter-spacing:-.06em; margin:0; line-height:1.28; }
+    .lede { font-size:14px; color:#73766f; margin:12px 0 25px; line-height:1.65; }
+    .brandRow { display:flex; align-items:center; gap:13px; }
+    .mark { width:52px; height:52px; border-radius:17px; background:#edf1e8; display:grid; place-items:center; font-size:28px; flex:none; }
+    .brandRow small { display:block; color:#75786e; margin-top:4px; font-size:12px; }
+    .hero { border-radius:22px; padding:25px 23px; background:linear-gradient(140deg,#f5ead4 0%,#f2dfb9 58%,#dae6ce 100%); position:relative; overflow:hidden; box-shadow:0 6px 21px #534e3730; }
+    .hero:after { content:""; position:absolute; width:155px; height:155px; border-radius:50%; right:-36px; bottom:-55px; background:radial-gradient(circle at 30% 30%,#f5c46a,#edaa6b); opacity:.7; }
+    .hero h2 { margin:0 0 9px; font-size:24px; letter-spacing:-.05em; position:relative; z-index:1; }
+    .hero p { margin:0; color:#57584a; font-size:14px; line-height:1.65; max-width:265px; position:relative; z-index:1; }
+    .eyebrow { font-size:11px; font-weight:800; color:#547445; letter-spacing:.08em; margin-bottom:14px; display:block; }
+    .filters { display:flex; gap:8px; overflow:auto; margin:25px 0 16px; padding-bottom:2px; }
+    .filter { border:1px solid #deded8; border-radius:22px; background:white; padding:9px 15px; color:#647067; white-space:nowrap; font-size:13px; }
+    .filter[aria-pressed="true"] { color:#fff; border-color:#507348; background:#507348; font-weight:700; }
+    .item { border-radius:21px; background:white; overflow:hidden; margin:0 0 14px; border:1px solid #ededeb; }
+    .illustration { height:174px; padding:22px; display:flex; flex-direction:column; justify-content:space-between; color:#4a4230; background:radial-gradient(circle at 73% 25%,#f7c981 0 15%,transparent 16%),linear-gradient(145deg,#e6ead8,#f5eee0 70%); }
+    .illustration .emoji { font-size:65px; line-height:1; align-self:center; }
+    .illustration span { font-weight:800; letter-spacing:-.03em; }
+    .itemMain { padding:19px; }
+    .tag { color:#638451; font-size:11px; font-weight:800; }
+    .item h3 { font-size:19px; margin:8px 0; letter-spacing:-.04em; }
+    .item p { font-size:13px; line-height:1.65; color:#70746d; margin:0 0 16px; }
+    .actions { display:flex; gap:8px; }
+    .primary, .secondary { border-radius:12px; padding:11px 13px; font-size:13px; font-weight:700; }
+    .primary { border:1px solid #527448; background:#527448; color:white; }
+    .secondary { border:1px solid #e0e5dc; background:#f4f7f1; color:#486b44; }
+    .muted { background:#fcfcfa; padding:20px; display:flex; align-items:center; gap:15px; }
+    .muted .symbol { font-size:31px; background:#f6f3e8; padding:13px; border-radius:17px; }
+    .muted h3 { margin:0 0 4px; font-size:15px; }
+    .muted p { margin:0; font-size:12px; }
+    .hidden { display:none !important; }
+    .note { font-size:12px; color:#81847c; line-height:1.7; padding:9px 2px; }
+    .detail { background:#fff; border:1px solid #dfebda; border-radius:18px; padding:22px; margin:0 0 13px; }
+    .detail h3 { margin:0 0 12px; }
+    .detail p { line-height:1.8; font-size:14px; color:#535b51; }
+    footer { font-size:11px; color:#83867d; text-align:center; padding-top:28px; }
+    .count { margin-left:auto; background:#f3f6ef; color:#4b6c48; padding:6px 10px; border-radius:16px; font-size:12px; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="brandRow">
+      <div class="mark" aria-hidden="true">🌱</div>
+      <div><p class="overline">BIRDIACONIA · DAILY LIFE</p><h1>일상살이</h1><small>@ilsang.sari · 잘 먹고, 잘 사는 하루</small></div>
+    </header>
+    <p class="lede">소박한 한 끼, 가끔의 한 잔, 여행지에서 발견하는 작은 즐거움을 기록합니다.</p>
+
+    <section class="hero" aria-label="일상살이 소개">
+      <span class="eyebrow">LIFE ARCHIVE</span>
+      <h2>오늘은 어떤<br />하루였나요?</h2>
+      <p>한 번의 식탁에서 시작해 지역의 사람과 장소, 경험을 발견하는 버디아코니아의 생활 콘텐츠입니다.</p>
+    </section>
+
+    <nav class="filters" aria-label="콘텐츠 주제">
+      <button class="filter" type="button" data-filter="all" aria-pressed="true">모두 보기</button>
+      <button class="filter" type="button" data-filter="food" aria-pressed="false">한 끼</button>
+      <button class="filter" type="button" data-filter="travel" aria-pressed="false">여행</button>
+      <button class="filter" type="button" data-filter="place" aria-pressed="false">지역 발견</button>
+      <button class="filter" type="button" data-filter="saved" aria-pressed="false">저장함 <span id="saveCount">0</span></button>
+    </nav>
+
+    <main id="items">
+      <article class="item" data-category="food" data-id="dinner-20261025">
+        <div class="illustration" role="img" aria-label="소박한 집밥 한 상을 상징하는 일러스트">
+          <span>오늘의 한 상</span><div class="emoji" aria-hidden="true">🍽️</div>
+        </div>
+        <div class="itemMain">
+          <span class="tag">일상살이 · 한 끼 · 2026.10.25</span>
+          <h3>별거 없어도 좋은 저녁</h3>
+          <p>노릇한 고기와 아삭한 채소, 마늘장아찌. 좋아하는 것들로 채운 소박한 한 상.</p>
+          <div class="actions">
+            <button type="button" class="primary" id="detailButton" aria-expanded="false" aria-controls="detailPanel">기록 보기</button>
+            <button type="button" class="secondary" id="saveButton" aria-pressed="false">♡ 저장</button>
+          </div>
+        </div>
+      </article>
+      <section id="detailPanel" class="detail hidden" aria-label="오늘의 한 상 상세 기록">
+        <h3>일상살이의 첫 번째 기록</h3>
+        <p>거창한 하루는 아니지만, 이렇게 잘 먹고 소소하게 살아가는 것도 좋다.<br />이 기록은 인스타그램 <strong>@ilsang.sari</strong>의 음식 콘텐츠와 연결되는 테스트 데이터입니다.</p>
+        <button type="button" class="secondary" id="closeDetail">접기</button>
+      </section>
+      <article class="item muted" data-category="travel" data-id="travel-coming-soon">
+        <div class="symbol" aria-hidden="true">🏞️</div>
+        <div><h3>여행지에서 만난 식탁</h3><p>첫 기록을 준비하고 있습니다. 실제 콘텐츠가 등록되기 전까지 가상의 장소나 상품을 표시하지 않습니다.</p></div>
+      </article>
+      <article class="item muted" data-category="place" data-id="place-coming-soon">
+        <div class="symbol" aria-hidden="true">🌿</div>
+        <div><h3>지역의 작은 발견</h3><p>지역 먹거리와 경험을 연결할 예정입니다. 현재 판매·예약 서비스는 제공하지 않습니다.</p></div>
+      </article>
+      <p id="empty" class="note hidden" role="status">이 주제에 표시할 기록이 아직 없습니다.</p>
+    </main>
+    <p class="note">Instagram 원본 게시물 자동 동기화는 연결되지 않았습니다. 초기 콘텐츠는 운영자가 확인하여 등록합니다.</p>
+    <footer>© Birdiaconia · 별도 Toss 미니앱 개발용 시안 · 공개 서비스 아님</footer>
+  </div>
+  <script type="module">
+    const itemId = "dinner-20261025";
+    const storageKey = "birdiaconia-ilsangsari-saved-v1";
+    let saved = new Set();
+    try {
+      const parsed = JSON.parse(localStorage.getItem(storageKey) || "[]");
+      if (Array.isArray(parsed)) saved = new Set(parsed.filter((v) => typeof v === "string"));
+    } catch (_) { saved = new Set(); }
+
+    const count = document.getElementById("saveCount");
+    const saveButton = document.getElementById("saveButton");
+    const detail = document.getElementById("detailPanel");
+    const detailButton = document.getElementById("detailButton");
+    const filters = [...document.querySelectorAll("[data-filter]")];
+    const posts = [...document.querySelectorAll("[data-category]")];
+    let currentFilter = "all";
+
+    function syncSave() {
+      const active = saved.has(itemId);
+      saveButton.setAttribute("aria-pressed", String(active));
+      saveButton.textContent = active ? "♥ 저장됨" : "♡ 저장";
+      count.textContent = String(saved.size);
+      try { localStorage.setItem(storageKey, JSON.stringify([...saved])); } catch (_) {}
+    }
+    function filterItems() {
+      let visible = 0;
+      posts.forEach((post) => {
+        const match = currentFilter === "all" ||
+          (currentFilter === "saved" ? saved.has(post.dataset.id) :
+            post.dataset.category === currentFilter);
+        post.classList.toggle("hidden", !match);
+        if (match) visible++;
+      });
+      if (currentFilter !== "all" && currentFilter !== "food") {
+        detail.classList.add("hidden");
+        detailButton.setAttribute("aria-expanded", "false");
+      }
+      document.getElementById("empty").classList.toggle("hidden", visible !== 0);
+      filters.forEach((button) =>
+        button.setAttribute("aria-pressed", String(button.dataset.filter === currentFilter)));
+    }
+    filters.forEach((button) => button.addEventListener("click", () => {
+      currentFilter = button.dataset.filter;
+      filterItems();
+    }));
+    saveButton.addEventListener("click", () => {
+      saved.has(itemId) ? saved.delete(itemId) : saved.add(itemId);
+      syncSave();
+      filterItems();
+    });
+    function toggleDetail(show) {
+      detail.classList.toggle("hidden", !show);
+      detailButton.setAttribute("aria-expanded", String(show));
+    }
+    detailButton.addEventListener("click", () => toggleDetail(detail.classList.contains("hidden")));
+    document.getElementById("closeDetail").addEventListener("click", () => toggleDetail(false));
+    syncSave();
+    filterItems();
+  </script>
+</body>
+</html>
